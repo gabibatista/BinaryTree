@@ -1,2 +1,6 @@
-﻿  ArvoreBinaria.vcxproj -> C:\Users\u15173\Desktop\ArvoreBinaria\Debug\ArvoreBinaria.exe
-  ArvoreBinaria.vcxproj -> C:\Users\u15173\Desktop\ArvoreBinaria\Debug\ArvoreBinaria.pdb (Full PDB)
+﻿  Arvore.cpp
+c:\users\u15173\desktop\binarytree\arvorebinaria\arvorebinaria\arvore.cpp(134): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\u15173\desktop\binarytree\arvorebinaria\arvorebinaria\arvore.cpp(497): warning C4102: 'adicionarAString_fim': unreferenced label
+c:\users\u15173\desktop\binarytree\arvorebinaria\arvorebinaria\arvore.cpp(547): warning C4101: 'menorMaiores': unreferenced local variable
+  ArvoreBinaria.vcxproj -> C:\Users\u15173\Desktop\BinaryTree\ArvoreBinaria\Debug\ArvoreBinaria.exe
+  ArvoreBinaria.vcxproj -> C:\Users\u15173\Desktop\BinaryTree\ArvoreBinaria\Debug\ArvoreBinaria.pdb (Full PDB)

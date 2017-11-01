@@ -26,7 +26,7 @@ void opcao_Inserir() {
 	}
 
 	if (!naArvore) {
-		a.inclusaoOrdenada(valor); // PROBLEMA NA INSERÇÃO DE 10
+		a.inclusaoOrdenada(valor); 
 		a.balanceada(a.getRaiz());
 		a.balanceada(a.getRaiz());
 		a.posicionarNoPrimeiro();

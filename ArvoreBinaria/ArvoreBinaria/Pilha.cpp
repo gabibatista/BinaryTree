@@ -32,7 +32,7 @@ void Pilha::empilha(NoPilha* no)
 
 NoPilha* Pilha::desempilha()
 {
-	NoPilha* retorno;
+	NoPilha* retorno = nullptr;
 	
 	if (!this->estaVazia()) {
 		retorno = this->topo;
@@ -58,7 +58,7 @@ std::string Pilha::toString()
 	pilhaString = "";
 
 	while (atual != nullptr) {
-		_itoa_s(atual->getValor(), pontChar, 10);
+		_itoa_s(atual->getValor()->getValor(), pontChar, 10);
 		pilhaString += pontChar;
 		atual = atual->getAnterior();
 		if (atual != nullptr)

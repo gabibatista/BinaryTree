@@ -74,7 +74,7 @@ No* maisBaixo;
  balanceada_inicio: if (esseNo->getNivel() < niveis - 1) { // se o nivel do atual é menor que o último nível -> até o penúltimo
 		if (esseNo->getFilhoMenor() != nullptr) { // se não for nulo, atual recebe o seu filho menor
 			//balanceada(esseNo->getFilhoMenor()); // recursão-> um nível abaixo na árvore
-			p.empilha(new NoPilha(esseNo, 1));
+			p.empilha(new NoPilha(esseNo, 1, "balanceada"));
 			esseNo = esseNo->getFilhoMenor();
 			goto balanceada_inicio;
 		local1:
@@ -82,7 +82,7 @@ No* maisBaixo;
 
 			if (esseNo->getFilhoMaior() != nullptr) { // se não for nulo, atual recebe o seu filho maior
 					//balanceada(esseNo->getFilhoMaior()); // recursão-> um nível abaixo na árvore
-					p.empilha(new NoPilha(esseNo, 2));
+					p.empilha(new NoPilha(esseNo, 2, "balanceada"));
 					esseNo = esseNo->getFilhoMaior();
 					goto balanceada_inicio;
 				local2:
@@ -144,6 +144,11 @@ No* maisBaixo;
 			else if (p.getTopo()->indicacao == 2)
 				goto local2;
 		}
+
+		if (!p.estaVazia() && (p.getTopo()->getFuncao() == "balanceada")) {
+			esseNo = p.desempilha()->getValor();
+			goto balanceada_inicio;
+		}
 	}
 }
 
@@ -154,7 +159,7 @@ contQtdNosMaior_inicio:
 
 		if (raizAtual->getFilhoMenor() != nullptr) {
 			//contQtdNosMaior(raizAtual->getFilhoMenor());
-			p.empilha(new NoPilha(raizAtual, 3));
+			p.empilha(new NoPilha(raizAtual, 3, "contQtdNosMaior"));
 			raizAtual = raizAtual->getFilhoMenor();
 			goto contQtdNosMaior_inicio;
 
@@ -164,7 +169,7 @@ contQtdNosMaior_inicio:
 
 		if (raizAtual->getFilhoMaior() != nullptr) {
 			//contQtdNosMaior(raizAtual->getFilhoMaior());
-			p.empilha(new NoPilha(raizAtual, 4));
+			p.empilha(new NoPilha(raizAtual, 4, "contQtdNosMaior"));
 			raizAtual = raizAtual->getFilhoMaior();
 			goto contQtdNosMaior_inicio;
 
@@ -183,6 +188,11 @@ contQtdNosMaior_inicio:
 			goto local4;
 	}
 
+	if (!p.estaVazia() && (p.getTopo()->getFuncao() == "contQtdNosMaior")) {
+		raizAtual = p.desempilha()->getValor();
+		goto contQtdNosMaior_inicio;
+	}
+
 	return maisBaixo;
 }
 
@@ -193,7 +203,7 @@ No* Arvore::contQtdNosMenor(No* raizAtual) {
 
 		if (raizAtual->getFilhoMenor() != nullptr) {
 			//contQtdNosMenor(raizAtual->getFilhoMenor());
-			p.empilha(new NoPilha(raizAtual, 5));
+			p.empilha(new NoPilha(raizAtual, 5, "contQtdNosMenor"));
 			raizAtual = raizAtual->getFilhoMenor();
 			goto contQtdNosMenor_inicio;
 
@@ -203,7 +213,7 @@ No* Arvore::contQtdNosMenor(No* raizAtual) {
 
 		if (raizAtual->getFilhoMaior() != nullptr) {
 			//contQtdNosMenor(raizAtual->getFilhoMaior());
-			p.empilha(new NoPilha(raizAtual, 6));
+			p.empilha(new NoPilha(raizAtual, 6, "contQtdNosMenor"));
 			raizAtual = raizAtual->getFilhoMaior();
 			goto contQtdNosMenor_inicio;
 
@@ -220,6 +230,11 @@ No* Arvore::contQtdNosMenor(No* raizAtual) {
 			goto local5;
 		else if (p.getTopo()->indicacao == 6)
 			goto local6;
+	}
+
+	if (!p.estaVazia() && (p.getTopo()->getFuncao() == "contQtdNosMenor")) {
+		raizAtual = p.desempilha()->getValor();
+		goto contQtdNosMenor_inicio;
 	}
 
 	return maisBaixo;
@@ -455,7 +470,7 @@ void Arvore::adicionarAString(No* noAtual){
 
 	if (noAtual->getFilhoMenor() != nullptr) { //// se tem o filho menor
 		//adicionarAString(noAtual->getFilhoMenor()); //// recursão => avança para o próximo maior
-		p.empilha(new NoPilha(noAtual, 7));
+		p.empilha(new NoPilha(noAtual, 7, "adicionarAString"));
 		noAtual = noAtual->getFilhoMenor();
 		goto adicionarAString_inicio;
 
@@ -470,10 +485,28 @@ void Arvore::adicionarAString(No* noAtual){
 		niveis += 1;
 
 	if (noAtual->getFilhoMaior() != nullptr) { //// se tem o filho maior
-		adicionarAString((*noAtual).getFilhoMaior()); //// recursão => avança para o próximo maior
+		//adicionarAString((*noAtual).getFilhoMaior()); //// recursão => avança para o próximo maior
+		p.empilha(new NoPilha(noAtual, 8, "adicionarAString"));
+		noAtual = noAtual->getFilhoMaior();
+		goto adicionarAString_inicio;
+
+		local8:
+			noAtual = p.desempilha()->getValor();
 	}
 
-	arvoreString += ')';					  //// finaliza sempre com um parênteses
+		arvoreString += ")";					  //// finaliza sempre com um parênteses
+
+		if (!p.estaVazia()) {
+			if (p.getTopo()->indicacao == 7)
+				goto local7;
+			else if (p.getTopo()->indicacao == 8)
+				goto local8;
+		}
+	
+		if (!p.estaVazia() && (p.getTopo()->getFuncao() == "adicionarAString")) {
+		noAtual = p.desempilha()->getValor();
+		goto adicionarAString_inicio;
+	}
 }
 
 
@@ -725,6 +758,7 @@ verifica em toda a árvore se há algum nó com o valor
 */
 No* Arvore::procurarNo(int valorProcurado)
 {	
+	procurarNo_inicio:
 	if (this->getAtual()->getValor() == valorProcurado)	// se o valor do nó atual é igual ao valorProcurado
 		return atual;								// retorna atual
 
@@ -733,7 +767,8 @@ No* Arvore::procurarNo(int valorProcurado)
 			return getAtual()->getFilhoMenor();							// retorno o atual
 
 		atual = getAtual()->getFilhoMenor();		// atual aponta para o filho menor
-		return procurarNo(valorProcurado);			// recursão => procura novamente, sendo o filho menor o atual
+		//return procurarNo(valorProcurado);			// recursão => procura novamente, sendo o filho menor o atual
+		goto procurarNo_inicio;
 	}
 
 	if (getAtual()->getValor() < valorProcurado) {   // se o valor do nó atual é menor que o valorProcurado
@@ -741,7 +776,8 @@ No* Arvore::procurarNo(int valorProcurado)
 			return getAtual()->getFilhoMaior();							// retorno o atual
 
 		atual = getAtual()->getFilhoMaior();		// atual aponta para o filho maior
-		return procurarNo(valorProcurado);			// recursão => procura novamente, sendo o filho maior o atual
+		//return procurarNo(valorProcurado);			// recursão => procura novamente, sendo o filho maior o atual
+		goto procurarNo_inicio;
 	}
 
 	return atual; // retorna o atual
